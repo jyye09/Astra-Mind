@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Astra Mind · Salud psicosocial de la tripulación</title>
+<style>
+:root{--bg:#f3f4f8;--p:#fff;--p2:#eef1fa;--tx:#1b1f3b;--mu:#6b7394;--ac:#3b6df0;--ok:#22c55e;--su:#e0a800;--wa:#ef4444;--bd:#e1e5f0;--pu:#6d3fd6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a0f1e;--p:#10183a;--p2:#18234e;--tx:#eef1ff;--mu:#97a3d0;--ac:#4fd1ff;--ok:#2ee59d;--su:#ffc94a;--wa:#ff5470;--bd:#2a3768;--pu:#a66bff}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;color:var(--tx);font:15px/1.5 "Trebuchet MS","Segoe UI",sans-serif;background:var(--bg);min-height:100vh}
+header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px 20px;background:linear-gradient(90deg,#3b4bd8,#6d3fd6);color:#fff}
+h1{font:700 22px "Trebuchet MS",sans-serif;margin:0;color:#fff}
+h2{font:700 17px Georgia,serif;margin:0 0 8px}h3{font-size:14px;margin:14px 0 6px}.mu{color:var(--mu);font-size:13px}
+nav{display:flex;gap:8px;padding:6px 18px 12px;overflow-x:auto}
+button,.b{background:var(--p);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:8px 14px;cursor:pointer;font:inherit;white-space:nowrap;transition:transform .15s}
+button:hover{transform:translateY(-2px)}
+nav button{font-weight:700;padding:10px 18px}nav button.on{background:linear-gradient(90deg,var(--ac),var(--pu));color:#fff;border-color:transparent}
+input,textarea{background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:8px;font:inherit;max-width:100%}
+main{padding:6px 18px 30px;max-width:1240px;margin:auto}.tab{display:none}.tab.on{display:block}
+.g{display:grid;gap:14px;align-items:start;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
+.card{background:var(--p);border:1px solid var(--bd);border-radius:16px;padding:16px;box-shadow:0 2px 10px rgba(30,40,90,.07);border-top:4px solid var(--cc,var(--ac))}
+.big{font:700 32px Georgia,serif}.row{display:flex;gap:8px;margin-top:8px}.row input{flex:1}
+.chat{height:230px;overflow-y:auto;background:var(--bg);border-radius:12px;padding:8px}
+.m{margin:6px 0;padding:6px 11px;border-radius:12px;background:var(--p2);max-width:90%}.m.me{margin-left:auto;background:linear-gradient(90deg,var(--ac),var(--pu));color:#fff}.m small{display:block;opacity:.75;font-size:11px}
+.mt{margin:7px 0}.mt .l{display:flex;justify-content:space-between;font-size:13px}.bar{height:10px;border-radius:6px;background:var(--bg);overflow:hidden}.bar i{display:block;height:100%;border-radius:6px;transition:width .4s}
+.sb{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0}.sb button{flex:1;min-width:130px;padding:18px 10px;border:3px solid transparent;background:var(--cc);color:#fff;text-align:center;border-radius:16px;font-weight:600;opacity:.85}
+.sb button.on{opacity:1;border-color:var(--tx);transform:scale(1.03)}.sb b{font:700 36px Georgia,serif;display:block}
+.ac{display:flex;align-items:center;gap:8px;text-align:left;min-width:0;border:2px solid var(--cc);border-radius:14px;padding:6px 12px}#subs,#names{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px}#subs .ac,#names .ac{flex:1 0 150px}.ac.on{background:var(--p2);box-shadow:0 0 0 3px var(--cc)}
+.av{width:38px;height:38px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#06101f;background:var(--cc);flex:none}
+.sc{display:flex;gap:4px}.sc button{flex:1;padding:8px 0}.sc button.on{background:var(--ac);color:#06101f}
+svg.ch{width:100%;height:80px;background:var(--bg);border-radius:10px}.lock{color:var(--su);font-weight:700}#mine .g{grid-template-columns:repeat(2,minmax(0,1fr))}.cb.ct{border:2px solid var(--wa);border-top-width:5px}.cb .chat{height:300px}.cb input{padding:10px}.hh{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;margin-bottom:6px}.hb{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:22px;align-items:start}.chs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.chs h3{margin:0 0 4px;font-size:13px}#mm{display:grid;grid-template-columns:1fr 1fr;column-gap:18px}#mm p{grid-column:1/-1;margin:2px 0 6px}@media(max-width:860px){#mine .g,.hb,.chs{grid-template-columns:1fr}}#thread{height:400px}#t4 .g>div:last-child:not(.card){position:sticky;top:8px}
+.sl{display:grid;grid-template-columns:90px 1fr 54px;gap:8px;align-items:center;font-size:13px}.sl input{padding:0}
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+#ov .w{background:var(--p);border:3px solid var(--wa);border-radius:18px;padding:22px;max-width:480px;width:100%;animation:pl 1s infinite;max-height:90vh;overflow:auto}
+@keyframes pl{50%{box-shadow:0 0 38px var(--wa)}}@media(prefers-reduced-motion:reduce){#ov .w{animation:none}}
+#ship{width:100%;height:auto;border-radius:16px;border:1px solid var(--bd);background:#050818;display:block}.chip{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:700}
+</style></head><body>
+<header><h1>🚀 Astra Mind · salud psicosocial</h1><div id="tm" style="font:700 18px Georgia,serif"></div></header>
+<nav id="nav"><button data-t="t1">🔒 🛰️ Mapa de la nave</button><button data-t="t2" class="on">👤 Mi espacio</button><button data-t="t3">🤝 Convivencia</button><button data-t="t4">🔒 📡 Centro de control</button></nav>
+<main>
+<section class="tab" id="t1"><div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px"><span class="chip" style="background:var(--wa);color:#fff">🔒 Solo IA y centro de control</span><button id="pp">⏸ Pausa</button><span class="mu">Velocidad</span><button class="sp on" data-s="1">x1</button><button class="sp" data-s="6">x6</button><button class="sp" data-s="30">x30</button><button class="sp" data-s="150">x150</button></div>
+<div class="g" style="grid-template-columns:minmax(0,3fr) minmax(230px,1fr)"><svg id="ship" viewBox="0 0 900 340"></svg><div class="card"><h2>Ubicación en tiempo real</h2><div id="loc"></div></div></div></section>
+
+<section class="tab on" id="t2"><h2>👤 Mi espacio <span class="mu">· cada tripulante solo accede al suyo</span></h2><div id="subs"></div><div id="mine"></div></section>
+
+<section class="tab" id="t3"><div class="g"><div class="card" style="--cc:var(--pu)"><h2>Convivencia general</h2><div class="big" id="cohe"></div><div class="mu">índice de la tripulación hoy</div><h3>🔒 Privacidad</h3><div id="soc" class="mu"></div><h3>Evolución del grupo</h3><div id="c-cohe"></div></div>
+<div class="card" style="--cc:var(--ok)"><h2>Actividades grupales</h2><div class="mu">Apúntate como:</div><div id="whoc" style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0"></div><div id="acts"></div></div>
+<div class="card" style="--cc:var(--ac)"><h2>Canal de la tripulación</h2><div class="chat" id="crew"></div><div class="row"><input id="crew-in" placeholder="Escribe a todos (como el tripulante elegido)"><button id="crew-go">Enviar</button></div></div></div></section>
+
+<section class="tab" id="t4"><div class="g" id="sum"></div><h2 style="margin-top:18px">Estado de la tripulación</h2><div class="sb" id="fl"></div><div id="names"></div>
+<div class="g" style="margin-top:8px"><div class="card" id="det">👆 Pulsa un grupo y luego un tripulante para ver su salud.</div><div><div class="card" style="--cc:var(--pu)"><h2 id="cth">Comunicación (elige un tripulante)</h2><div id="thread" class="chat"></div><div class="row"><input id="ctrl-in" placeholder="Mensaje o consejo"><button id="ctrl-go">Enviar</button></div><div id="tips"></div><h3>📣 Aviso a toda la tripulación</h3><div class="row"><input id="all-in" placeholder="Mensaje para todos"><button id="all-go">Difundir</button></div></div></div></div>
+<div class="card" style="margin-top:14px;--cc:var(--ok)"><h2>Evolución de la tripulación (salud por día)</h2><div id="c-team"></div></div></section>
+</main>
+<div id="ov"><div class="w" id="ovc"></div></div>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const rn=(i,j,k)=>{let x=Math.sin(i*127.1+j*311.7+k*74.7)*43758.5453;return x-Math.floor(x)};
+const cl=(v,a,b)=>Math.max(a,Math.min(b,v)),avg=a=>a.reduce((x,y)=>x+y,0)/a.length;
+const CREW=[
+{n:'Elena Vega',r:'Comandante',c:'#4fd1ff',sl:7.3,hr:58,st:25,so:.8,psy:82,from:99,k:0},
+{n:'Kai Tanaka',r:'Ingeniero',c:'#ff9f43',sl:7.1,hr:60,st:30,so:.7,psy:78,from:6,k:1},
+{n:'Lena Fischer',r:'Bióloga',c:'#2ee59d',sl:7.2,hr:59,st:27,so:.22,psy:80,from:99,k:0},
+{n:'Omar Haddad',r:'Médico',c:'#c792ea',sl:7,hr:61,st:32,so:.65,psy:76,from:13,k:.5},
+{n:'Sofía Duarte',r:'Piloto',c:'#ff6bd6',sl:7.4,hr:57,st:24,so:.85,psy:84,from:99,k:0}];
+CREW.forEach((a,i)=>a.pin=String(i+1).repeat(4));
+const ROOMS={Cabina:[150,'#4fd1ff'],Laboratorio:[285,'#2ee59d'],Comedor:[450,'#ffc94a'],Gimnasio:[615,'#ff6b6b'],Dormitorio:[750,'#a66bff']};
+const col={ok:'var(--ok)',su:'var(--su)',wa:'var(--wa)'},LBL={ok:'Sin alertas',su:'Sugerencia',wa:'Aviso'},EM={ok:'🟢',su:'🟡',wa:'🔴'};
+const QS=['¿Cómo has dormido esta noche?','¿Qué tan motivado te sientes con tu trabajo?','¿Has disfrutado hablar con tus compañeros hoy?','¿Cuánto has echado de menos a tu familia?','¿Te sientes tranquilo/a ahora mismo?','¿Has tenido tensión con alguien?','¿Tienes energía para mañana?','¿Cuánto te pesa el espacio cerrado?','¿Te sientes valorado/a por el equipo?','¿Has tenido pensamientos negativos repetitivos?'];
+const BAD=new Set([3,5,7,9]);
+const ACTS=[['🍲','Cena compartida con tema','Cada uno cocina un plato de su país.'],['🎲','Torneo de juegos de mesa','Dos equipos mixtos, 45 minutos.'],['🏋️','Ejercicio en parejas','Rutina por parejas rotativas.'],['🎬','Cine y charla','Película por votación y 15 min de comentarios.'],['📞','Videollamada grupal con la Tierra','Mensajes de familiares para todos.'],['🌱','Taller de invernadero','Cuidar plantas juntos, sin presión por hablar.'],['🌹','Ronda de rosa y espina','Cada uno cuenta algo bueno y algo difícil.']];
+let day=9,hour=6.9,speed=1,paused=false,sel=-1,filt='ok',me=0,simFor=-2,joined={},unl=new Set(),prev=[],cnt={};
+const chatAI=CREW.map(()=>[]),chatCtl=CREW.map(()=>[]),crew=[];
+const msg=(w,x)=>({w,x,d:day,h:Math.floor(hour)});
+function fin(o){const s=Math.min(100,o.sleep/7.5*100),h=Math.max(0,100-Math.max(0,o.hr-62)*3.5);o.score=Math.round(.3*s+.2*h+.2*(100-o.stress)+.3*o.psy);return o}
+function met(i,d){const a=CREW[i];if(a.ov)return fin({day:d,...a.ov});const ramp=cl((d-a.from)/10,0,1)*a.k,r=(k,s)=>(rn(i,d,k)-.5)*s;
+return fin({day:d,sleep:+(a.sl-ramp*2.2+r(1,.8)).toFixed(1),hr:Math.round(a.hr+ramp*22+r(2,4)),stress:Math.round(cl(a.st+ramp*42+r(3,8),5,98)),social:+cl(a.so-ramp*.5+r(4,.1),.03,.98).toFixed(2),psy:Math.round(cl(a.psy-ramp*35+r(5,6),10,98))})}
+const H=CREW.map(()=>[]);for(let d=1;d<=9;d++)CREW.forEach((a,i)=>H[i].push(met(i,d)));
+const T=i=>H[i][H[i].length-1];
+function stat(i){const t=T(i),f=[];if(t.sleep<6)f.push('sueño corto ('+t.sleep+' h)');if(t.hr>78)f.push('frecuencia alterada ('+t.hr+' lpm)');if(t.stress>65)f.push('estrés alto ('+t.stress+'/100)');if(t.psy<50)f.push('test psicológico bajo ('+t.psy+'/100)');
+const low=t.social<.3;let k='ok',tx='Todo en rango.';
+if(low&&!f.length)tx='Poca interacción social pero valores normales: perfil probablemente introvertido.';
+else if((low&&f.length>=2)||f.length>=3){k='wa';tx='Aislamiento y/o varios indicadores alterados a la vez: posible problema personal o de convivencia.'}
+else if(f.length||low){k='su';tx='Un indicador fuera de rango; conviene seguimiento.'}
+return{k,f,tx,low}}
+const delay=()=>Math.round(cl(3+day*.35,3,22)*10)/10,cohe=d=>Math.round(avg(CREW.map((a,i)=>(H[i].find(x=>x.day==d)||T(i)).social))*100);
+function aiAlert(i,s){return 'Hola '+CREW[i].n.split(' ')[0]+', he notado: '+(s.f.join(', ')||'poco contacto con el grupo')+'. ¿Quieres contarme cómo te sientes? Puedo proponerte una pausa guiada o una actividad con el equipo.'}
+function aiReply(i,t){t=t.toLowerCase();
+if(/dorm|sue[ñn]o|insomn/.test(t))return 'El sueño es clave. Hoy llevas '+T(i).sleep+' h. Baja la luz 60 min antes y evita pantallas; si sigue así aviso al médico de a bordo.';
+if(/solo|soledad|aisl/.test(t))return 'Sentirse solo en una misión larga es muy humano. ¿Te apetece compartir una comida hoy? Puedo proponer una actividad tranquila.';
+if(/estr|ansi|nerv|agobi/.test(t))return 'Respiremos: inhala 4 s, retén 4 s, exhala 6 s, cinco veces. Luego cuéntame qué lo ha causado.';
+if(/famil|tierra|casa|echo/.test(t))return 'Extrañar la Tierra es normal. Puedo pedir una videollamada o mensajes de tu familia (llegan con '+delay()+' min de retraso).';
+if(/triste|mal|cansad|harto|enfad/.test(t))return 'Gracias por contármelo. No tienes que cargar con esto solo/a: ¿aviso al psicólogo de forma confidencial?';
+return 'Te escucho. Cuéntame más: ¿es algo del trabajo, de la convivencia o personal?'}
+function newDay(){CREW.forEach((a,i)=>H[i].push(met(i,day)));CREW.forEach((a,i)=>{const s=stat(i);if(s.k!='ok')chatAI[i].push(msg('ai',aiAlert(i,s)))});render()}
+// ---- nave 2D ----
+function buildShip(){let s='<defs><linearGradient id="hg" x1="0" y1="0" y2="1"><stop offset="0" stop-color="#3a4a86"/><stop offset="1" stop-color="#1a2350"/></linearGradient><radialGradient id="ea"><stop offset="0" stop-color="#7fd0ff"/><stop offset="1" stop-color="#1b5fd0"/></radialGradient><filter id="gl"><feGaussianBlur stdDeviation="3"/></filter></defs>';
+for(let i=0;i<70;i++)s+='<circle cx="'+(rn(i,1,1)*900)+'" cy="'+(rn(i,2,2)*340)+'" r="'+(.4+rn(i,3,3)*1.2)+'" fill="#fff" opacity="'+(.3+rn(i,4,4)*.6)+'"/>';
+s+='<circle id="earth" cx="55" cy="45" r="30" fill="url(#ea)"/><text id="etx" x="95" y="48" fill="#9fb0ff" font-size="12">Tierra</text>';
+s+='<rect x="330" y="22" width="240" height="52" rx="4" fill="#1f6fd1" opacity=".85" stroke="#4fd1ff"/><rect x="330" y="266" width="240" height="52" rx="4" fill="#1f6fd1" opacity=".85" stroke="#4fd1ff"/><rect x="440" y="74" width="20" height="21" fill="#445"/><rect x="440" y="265" width="20" height="2" fill="#445"/>';
+s+='<polygon points="840,150 900,170 840,210" fill="#ff9f43" id="flame" opacity=".9"><animate attributeName="points" dur=".4s" repeatCount="indefinite" values="840,150 895,170 840,210;840,150 872,170 840,210;840,150 895,170 840,210"/></polygon><rect x="826" y="140" width="22" height="80" rx="4" fill="#556"/>';
+s+='<path d="M16 180 C40 120 80 92 125 92 L790 92 L835 118 L835 242 L790 268 L125 268 C80 268 40 240 16 180Z" fill="url(#hg)" stroke="#6f86ff" stroke-width="3"/>';
+s+='<rect x="30" y="172" width="42" height="16" rx="8" fill="#9fe7ff" opacity=".8"/>';
+const sz={Comedor:[170,150],Cabina:[120,124],Laboratorio:[125,124],Gimnasio:[120,124],Dormitorio:[110,124]};
+Object.entries(ROOMS).forEach(([n,[x,c]])=>{const[w,h]=sz[n];s+='<rect x="'+(x-w/2)+'" y="'+(180-h/2)+'" width="'+w+'" height="'+h+'" rx="12" fill="'+c+'" fill-opacity=".16" stroke="'+c+'" stroke-width="2"/><text x="'+x+'" y="'+(180-h/2+18)+'" text-anchor="middle" fill="'+c+'" font-size="13" font-weight="700">'+n+'</text>'});
+s+='<g id="ast">'+CREW.map((a,i)=>'<g id="a'+i+'" transform="translate(750,190)"><circle class="ring" r="21" fill="none" stroke="#ff5470" stroke-width="2" opacity="0"><animate attributeName="r" values="14;24;14" dur="1.2s" repeatCount="indefinite"/></circle><circle class="bd" r="14" fill="'+a.c+'" stroke="#2ee59d" stroke-width="3"/><text class="in" text-anchor="middle" y="5" font-size="13" font-weight="700" fill="#06101f">'+a.n[0]+'</text></g>').join('')+'</g>';
+s+='<rect id="nt" width="900" height="340" fill="#000" opacity="0" pointer-events="none"/>';$('#ship').innerHTML=s}
+function room(i){const t=T(i),h=Math.floor(hour);
+if(h>=23||h<6)return rn(i,day,h)>t.sleep/9+.5?'Cabina':'Dormitorio';if(h==6)return 'Dormitorio';
+const so=[7,12,13,18,19,20,21].includes(h),w=i%2?'Laboratorio':'Cabina';
+let r=[7,12,13,19,20].includes(h)?'Comedor':h==18?'Gimnasio':h==21?(rn(i,day,9)>.5?'Comedor':'Gimnasio'):w;
+if(so&&rn(i,day,h+40)>t.social+.25)r=i%3?'Dormitorio':'Laboratorio';return r}
+const P=CREW.map(()=>({x:750,y:190}));
+function frame(){cnt={};CREW.forEach((a,i)=>{const r=room(i);a.room=r;const k=cnt[r]=(cnt[r]||0);cnt[r]++;const tx=ROOMS[r][0]+((k%3)-1)*30,ty=(r=='Comedor'?190:196)+(Math.floor(k/3)-.2)*34;P[i].x+=(tx-P[i].x)*.06;P[i].y+=(ty-P[i].y)*.06;$('#a'+i).setAttribute('transform','translate('+P[i].x.toFixed(1)+','+P[i].y.toFixed(1)+')')});requestAnimationFrame(frame)}
+// ---- UI helpers ----
+const fmt=h=>String(Math.floor(h)).padStart(2,'0')+':'+String(Math.floor(h%1*60)).padStart(2,'0');
+function line(arr,min,max,c,lim){const w=300,h=80,p=arr.map((v,i)=>[i/Math.max(1,arr.length-1)*(w-8)+4,h-6-(cl(v,min,max)-min)/(max-min)*(h-12)]);const pts=p.map(q=>q.join(',')).join(' ');
+return '<svg class="ch" viewBox="0 0 300 80" preserveAspectRatio="none"><polygon fill="'+c+'" opacity=".2" points="4,80 '+pts+' '+(w-4)+',80"/><polyline fill="none" stroke="'+c+'" stroke-width="2.5" points="'+pts+'"/></svg>'}
+function mtr(l,txt,pct,c){return '<div class="mt"><div class="l"><span>'+l+'</span><b>'+txt+'</b></div><div class="bar"><i style="width:'+cl(pct,2,100)+'%;background:'+c+'"></i></div></div>'}
+function ring(p,l,s){const c=p<55?col.wa:p<72?col.su:col.ok,k=238.76;return '<div class="card" style="display:flex;gap:14px;align-items:center"><svg width="92" height="92" viewBox="0 0 92 92"><circle cx="46" cy="46" r="38" fill="none" style="stroke:var(--p2)" stroke-width="9"/><circle cx="46" cy="46" r="38" fill="none" style="stroke:'+c+'" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+(k*p/100)+' '+k+'" transform="rotate(-90 46 46)"/><text x="46" y="53" text-anchor="middle" font-size="24" font-weight="700" style="fill:var(--tx)">'+p+'</text></svg><div><b>'+l+'</b><div class="mu">'+s+'</div></div></div>'}
+function sb(i){const s=stat(i);return '<p><span class="chip" style="background:'+col[s.k]+';color:#fff">'+EM[s.k]+' '+LBL[s.k]+'</span> '+esc(s.tx)+'</p>'+meters(i)}
+function edHtml(i){const t=T(i);return '<div id="ed">'+[['sleep','😴 Sueño',2,10,.1],['hr','❤️ Pulso',45,110,1],['stress','⚡ Estrés',0,100,1],['psy','🧠 Test',0,100,1],['social','🤝 Social',0,1,.01]].map(d=>'<div class="sl"><span>'+d[1]+'</span><input type="range" data-k="'+d[0]+'" min="'+d[2]+'" max="'+d[3]+'" step="'+d[4]+'" value="'+t[d[0]]+'"><b id="v-'+d[0]+'">'+t[d[0]]+'</b></div>').join('')+'</div><div class="row"><button id="rst">↺ Restablecer</button></div>'}
+function meters(i){const t=T(i);return mtr('😴 Sueño',t.sleep+' h',t.sleep/9*100,t.sleep<6?col.wa:t.sleep<6.8?col.su:col.ok)+mtr('❤️ Frecuencia reposo',t.hr+' lpm',(t.hr-40)/60*100,t.hr>78?col.wa:t.hr>70?col.su:col.ok)+mtr('⚡ Estrés',t.stress+'/100',t.stress,t.stress>65?col.wa:t.stress>50?col.su:col.ok)+mtr('🧠 Bienestar (test)',t.psy+'/100',t.psy,t.psy<50?col.wa:t.psy<65?col.su:col.ok)+mtr('🤝 Tiempo social',Math.round(t.social*100)+'%',t.social*100,t.social<.3?col.su:col.ok)+mtr('💚 Salud global',t.score+'/100',t.score,t.score<55?col.wa:t.score<72?col.su:col.ok)}
+const who=w=>w=='c'?'Centro de control':w=='ai'?'Asistente':w=='a'?'Astronauta':CREW[w].n;
+function bub(l,mine,nm){return l.map(m=>'<div class="m'+(m.w==mine?' me':'')+'"><small>'+esc(nm?nm(m.w):who(m.w))+' · día '+m.d+' '+String(m.h).padStart(2,'0')+':00</small>'+esc(m.x)+'</div>').join('')||'<div class="mu">Sin mensajes todavía.</div>'}
+const stick=id=>{const e=$(id);if(e)e.scrollTop=e.scrollHeight};
+function rename(i,inp){const v=$(inp).value.trim();if(v){CREW[i].n=v;render();buildShipNames()}}
+function buildShipNames(){CREW.forEach((a,i)=>$('#a'+i+' .in').textContent=a.n[0])}
+// ---- Mi espacio ----
+function rMine(){$('#subs').innerHTML=CREW.map((a,i)=>'<button class="ac'+(i==me?' on':'')+'" data-i="'+i+'" style="--cc:'+a.c+'"><span class="av">'+a.n[0]+'</span><span><b>'+esc(a.n)+'</b><br><span class="mu">'+a.r+' · '+(unl.has(i)?'🔓':'🔒')+'</span></span></button>').join('');
+$$('#subs button').forEach(b=>b.onclick=()=>{me=+b.dataset.i;rMine()});
+const a=CREW[me],c=$('#mine');c.style.setProperty('--cc',a.c);
+if(!unl.has(me)){c.innerHTML='<div class="card" style="max-width:420px"><h2>🔒 Zona privada de '+esc(a.n)+'</h2><p class="lock">Solo puede verlo '+esc(a.n)+'.</p><div class="row"><input id="pin" type="password" maxlength="4" placeholder="PIN de 4 dígitos"><button id="pgo">Entrar</button></div><div class="mu" style="margin-top:8px">Demo: el PIN es '+a.pin+'.</div><div id="pe" class="wa"></div></div>';
+const go=()=>{if($('#pin').value==a.pin){unl.add(me);rMine()}else $('#pe').textContent='PIN incorrecto.'};$('#pgo').onclick=go;$('#pin').onkeydown=e=>{if(e.key=='Enter')go()};return}
+const t=T(me),s=stat(me),qs=[0,1,2,3,4].map(k=>(day*3+k*2)%10);
+c.innerHTML='<div class="mu lock" style="margin-bottom:8px">🔒 Solo lo puede ver '+esc(a.n)+' · <a href="#" id="lk" style="color:var(--ac)">cerrar sesión</a></div><div class="g">'+
+'<div class="card hc" style="grid-column:1/-1"><div class="hh"><div style="display:flex;gap:12px;align-items:center"><span class="av" style="--cc:'+a.c+';width:52px;height:52px;font-size:22px">'+esc(a.n[0])+'</span><div><h2 style="margin:0">'+esc(a.n)+' · '+a.r+'</h2><div class="row" style="margin:4px 0 0"><input id="rn" placeholder="Cambiar nombre"><button id="rg">Renombrar</button></div></div></div><div style="text-align:center"><div style="font:700 40px Georgia,serif;color:var(--wa)">❤️ <span id="bpm"></span></div><div class="mu">pulso en vivo (lpm)</div></div></div><div class="hb"><div id="mm">'+sb(me)+'</div><div class="chs"><div><h3>😴 Sueño</h3>'+line(H[me].map(x=>x.sleep),3,9,'#4fd1ff')+'</div><div><h3>❤️ Pulso en reposo</h3>'+line(H[me].map(x=>x.hr),50,95,'#ff5470')+'</div><div><h3>🧠 Bienestar</h3>'+line(H[me].map(x=>x.psy),0,100,'#2ee59d')+'</div></div></div></div>'+
+'<div class="card cb ct" style="--cc:var(--wa)"><h2>📡 Centro de control</h2><div class="chat" id="ctl"></div><div class="row"><input id="ctl-in" placeholder="Responder al centro de control"><button id="ctl-go">Enviar</button></div><div class="mu">Retraso con la Tierra: '+delay()+' min por trayecto.</div></div>'+
+'<div class="card cb" style="--cc:var(--pu)"><h2>🤖 Mi asistente personal</h2><div class="chat" id="ai"></div><div class="row"><input id="ai-in" placeholder="Cuéntame cómo te sientes…"><button id="ai-go">Enviar</button></div></div>'+
+'<div class="card" style="--cc:var(--ok)"><h2>✏️ Editar mis datos</h2><div class="mu">Simula tus sensores para ver cómo cambian tus indicadores.</div>'+edHtml(me)+'</div><div class="card" style="--cc:var(--su)"><h2>📝 Mini test del psicólogo</h2><div class="mu">1 = nada · 5 = mucho. Cambia cada día.</div>'+(t.tested?'<p style="color:var(--ok)">✅ Test de hoy enviado. ¡Gracias!</p>':qs.map(q=>'<h3>'+QS[q]+'</h3><div class="sc" data-q="'+q+'">'+[1,2,3,4,5].map(n=>'<button data-v="'+n+'">'+n+'</button>').join('')+'</div>').join('')+'<div class="row"><button id="tsend" style="background:var(--su);color:#06101f;font-weight:700">Enviar test</button></div>')+'</div></div>';
+$('#lk').onclick=e=>{e.preventDefault();unl.delete(me);rMine()};$('#rg').onclick=()=>rename(me,'#rn');$$('#ed input').forEach(r=>r.oninput=()=>{const t=T(me);t[r.dataset.k]=+r.value;$('#v-'+r.dataset.k).textContent=r.value;fin(t);CREW[me].ov={sleep:t.sleep,hr:t.hr,stress:t.stress,psy:t.psy,social:t.social};$('#mm').innerHTML=sb(me);rCrew();rCtrl();checkWarn()});$('#rst').onclick=()=>{delete CREW[me].ov;H[me][H[me].length-1]=met(me,day);render()};
+$$('.sc button').forEach(b=>b.onclick=()=>{[...b.parentNode.children].forEach(x=>x.classList.remove('on'));b.classList.add('on')});
+if($('#tsend'))$('#tsend').onclick=()=>{const v=$$('.sc').map(e=>{const b=e.querySelector('.on');return b?(BAD.has(+e.dataset.q)?6-+b.dataset.v:+b.dataset.v):null});if(v.includes(null)){alert('Responde las 5 preguntas.');return}
+t.psy=Math.round((avg(v)-1)/4*100);t.tested=1;fin(t);const st=stat(me);if(st.k!='ok')chatAI[me].push(msg('ai',aiAlert(me,st)));render()};
+const snd=(inp,fn)=>{const v=$(inp).value.trim();if(v){fn(v);render()}};
+$('#ai-go').onclick=()=>snd('#ai-in',v=>{chatAI[me].push(msg('me',v),msg('ai',aiReply(me,v)))});$('#ctl-go').onclick=()=>snd('#ctl-in',v=>chatCtl[me].push(msg('a',v)));
+$('#ai').innerHTML=bub(chatAI[me],'me',w=>w=='ai'?'Asistente':'Yo');$('#ctl').innerHTML=bub(chatCtl[me],'a',w=>w=='c'?'Centro de control':'Yo');stick('#ai');stick('#ctl')}
+// ---- Convivencia ----
+let wc=0;
+function rCrew(){$('#cohe').textContent=cohe(day)+'/100';$('#cohe').style.color=cohe(day)<50?'var(--wa)':cohe(day)<65?'var(--su)':'var(--ok)';
+$('#soc').textContent='Aquí solo se muestra el índice del grupo. La ubicación de cada tripulante la analiza únicamente la IA y solo la ve el centro de control: nadie a bordo puede saber dónde están sus compañeros.';
+$('#c-cohe').innerHTML=line(H[0].map(x=>cohe(x.day)),0,100,'#a66bff');
+$('#whoc').innerHTML=CREW.map((a,i)=>'<button class="ac'+(i==wc?' on':'')+'" data-i="'+i+'" style="--cc:'+a.c+';min-width:0;padding:4px 10px;margin:0"><span class="av" style="width:26px;height:26px">'+a.n[0]+'</span>'+esc(a.n.split(' ')[0])+'</button>').join('');$$('#whoc button').forEach(b=>b.onclick=()=>{wc=+b.dataset.i;rCrew()});
+const c=cohe(day),sug=c<50?[4,5,6,0]:c<65?[1,2,3,4]:[0,1,2,3];
+$('#acts').innerHTML=ACTS.map((x,k)=>{const j=joined[k]||[];return '<div class="card" style="margin:8px 0;padding:10px;--cc:'+(sug.includes(k)?'var(--su)':'var(--bd)')+'"><b>'+x[0]+' '+x[1]+'</b>'+(sug.includes(k)?' <span class="chip" style="background:var(--su);color:#06101f">sugerida hoy</span>':'')+'<div class="mu">'+x[2]+'</div><div class="mu">Apuntados: '+(j.map(n=>esc(CREW[n].n.split(' ')[0])).join(', ')||'nadie aún')+'</div><button data-k="'+k+'">'+(j.includes(wc)?'Salir':'Apuntarme')+'</button></div>'}).join('');
+$$('#acts button').forEach(b=>b.onclick=()=>{const k=+b.dataset.k,j=joined[k]||(joined[k]=[]),p=j.indexOf(wc);if(p<0){j.push(wc);crew.push(msg(wc,'Me apunto a: '+ACTS[k][1]))}else j.splice(p,1);rCrew()});
+$('#crew').innerHTML=bub(crew,wc);stick('#crew')}
+// ---- Centro de control ----
+function rCtrl(){const ss=CREW.map((a,i)=>stat(i).k),n=k=>ss.filter(x=>x==k).length;
+const card=(l,v,c)=>'<div class="card" style="--cc:'+c+'"><div class="mu">'+l+'</div><div class="big">'+v+'</div></div>';
+$('#sum').innerHTML=ring(cohe(day),'Convivencia','índice de la tripulación hoy')+ring(Math.round(avg(CREW.map((a,i)=>T(i).score))),'Salud media','de la tripulación')+card('📅 día de la misión','Día '+day,'var(--ac)')+card('⏱ retraso con la Tierra',delay()+' min','var(--su)');
+$('#fl').innerHTML=['ok','su','wa'].map(k=>'<button data-f="'+k+'" class="fl'+(k==filt?' on':'')+'" style="--cc:'+col[k]+'"><b>'+n(k)+'</b>'+({ok:'Sin alertas',su:'Sugerencias',wa:'Avisos'})[k]+'</button>').join('');$$('.fl').forEach(b=>b.onclick=()=>{filt=b.dataset.f;sel=-1;rCtrl()});
+const l=CREW.map((a,i)=>i).filter(i=>ss[i]==filt);
+$('#names').innerHTML=l.map(i=>'<button class="ac'+(i==sel?' on':'')+'" data-i="'+i+'" style="--cc:'+col[filt]+'"><span class="av" style="background:'+CREW[i].c+'">'+CREW[i].n[0]+'</span><span><b>'+esc(CREW[i].n)+'</b><br><span class="mu">Salud '+T(i).score+'/100</span></span></button>').join('')||'<span class="mu">Nadie en este grupo.</span>';
+$$('#names button').forEach(b=>b.onclick=()=>{sel=sel==+b.dataset.i?-1:+b.dataset.i;rCtrl()});
+$('#c-team').innerHTML=line(H[0].map((x,d)=>avg(CREW.map((a,i)=>H[i][d].score))),0,100,'#2ee59d')+'<div class="mu" style="margin-top:6px">'+CREW.map((a,i)=>'<span style="color:'+a.c+'">● '+esc(a.n.split(' ')[0])+' '+T(i).score+'</span>').join(' · ')+'</div>';
+if(sel<0){$('#det').innerHTML='👆 Pulsa un grupo y luego un tripulante para ver su salud.';$('#det').style.setProperty('--cc','var(--ac)');$('#thread').innerHTML='';$('#cth').textContent='Comunicación (elige un tripulante)';$('#tips').innerHTML='';simFor=-2;return}
+const a=CREW[sel],t=T(sel),s=stat(sel),h=H[sel];$('#det').style.setProperty('--cc',col[s.k]);
+$('#det').innerHTML='<div style="display:flex;gap:12px;align-items:center"><span class="av" style="--cc:'+a.c+';width:52px;height:52px;font-size:22px">'+esc(a.n[0])+'</span><div><h2 style="margin:0">'+esc(a.n)+'</h2><span class="mu">'+a.r+' · '+(a.room||'')+'</span></div></div><div class="row"><input id="rn4" placeholder="Cambiar nombre"><button id="rg4">Renombrar</button></div><p><span class="chip" style="background:'+col[s.k]+';color:#06101f">'+EM[s.k]+' '+LBL[s.k]+'</span> '+esc(s.tx)+'</p>'+(s.f.length?'<p class="mu">Indicadores: '+s.f.join('; ')+'.</p>':'')+meters(sel)+
+'<h3>Evolución de salud</h3>'+line(h.map(x=>x.score),0,100,'#4fd1ff')+'<h3>Sueño</h3>'+line(h.map(x=>x.sleep),3,9,'#ffc94a')+'<h3>Tiempo social</h3>'+line(h.map(x=>x.social*100),0,100,'#2ee59d')+'<h3>Análisis</h3><p>'+analysis(sel)+'</p>';
+$('#rg4').onclick=()=>rename(sel,'#rn4');
+if(false){const D=[['sleep','😴 Sueño',2,10,.1],['hr','❤️ Pulso',45,110,1],['stress','⚡ Estrés',0,100,1],['psy','🧠 Test',0,100,1],['social','🤝 Social',0,1,.01]];
+$('#sim').innerHTML='<h2>🎛️ Simulador de datos · '+esc(a.n)+'</h2><div class="mu">Mueve los valores para ver qué pasaría ante un dato anómalo.</div>'+D.map(d=>'<div class="sl"><span>'+d[1]+'</span><input type="range" data-k="'+d[0]+'" min="'+d[2]+'" max="'+d[3]+'" step="'+d[4]+'" value="'+t[d[0]]+'"><b id="v-'+d[0]+'">'+t[d[0]]+'</b></div>').join('')+'<div class="row"><button id="crisis" style="border-color:var(--wa)">⚠️ Provocar crisis</button><button id="rst">↺ Restablecer</button></div>';
+$$('#sim input').forEach(r=>r.oninput=()=>{const t=T(sel);t[r.dataset.k]=+r.value;$('#v-'+r.dataset.k).textContent=r.value;fin(t);CREW[sel].ov={sleep:t.sleep,hr:t.hr,stress:t.stress,psy:t.psy,social:t.social};render()});
+$('#crisis').onclick=()=>{const o={sleep:4.2,hr:93,stress:88,psy:30,social:.1};Object.assign(T(sel),o);fin(T(sel));CREW[sel].ov=o;simFor=-2;render()};
+$('#rst').onclick=()=>{delete CREW[sel].ov;H[sel][H[sel].length-1]=met(sel,day);simFor=-2;render()}}
+$('#thread').innerHTML=bub(chatCtl[sel],'c',w=>w=='c'?'Centro de control':a.n);stick('#thread');$('#cth').textContent='💬 Chat con '+a.n;
+const tp=['Descansa hoy: te libero 1 h de tareas.','¿Cenamos juntos esta noche? Te guardo sitio.','Hablemos por videollamada con el psicólogo.','Evita cafeína desde las 15:00 y baja la luz de tu cabina.'];
+$('#tips').innerHTML=tp.map(x=>'<button class="tp" style="font-size:12px;margin:4px 4px 0 0">'+x+'</button>').join('');$$('.tp').forEach(b=>b.onclick=()=>$('#ctrl-in').value=b.textContent)}
+function analysis(i){const h=H[i],t=T(i),f=h[Math.max(0,h.length-6)],s=stat(i),d=t.score-h[0].score,dd=t.score-f.score;
+let x='Salud '+t.score+'/100 ('+(d>=0?'+':'')+d+' desde el día 1; '+(dd>=0?'+':'')+dd+' en los últimos días). ';
+if(s.k=='wa')x+='Patrón combinado de aislamiento, peor sueño y pulso/estrés elevados: no encaja con introversión; sugiere malestar personal o fricción en el grupo. Recomendado: conversación privada hoy, revisión del psicólogo y reintegración gradual en actividades compartidas.';
+else if(s.k=='su')x+='Señales aisladas. Recomendado: mensaje de apoyo, vigilar 48 h y proponer una actividad ligera.';
+else if(s.low)x+='Su baja interacción social es estable y las constantes son buenas: respetar su espacio y ofrecer actividades de bajo contacto.';
+else x+='Evolución estable. Mantener rutina.';return x}
+// ---- aviso grave ----
+const pend=[];function checkWarn(){CREW.forEach((a,i)=>{const s=stat(i);if(s.k=='wa'&&prev[i]!='wa'&&!pend.includes(i))pend.push(i);prev[i]=s.k});if(!$('#t4').classList.contains('on'))return;const q=pend.splice(0).filter(i=>stat(i).k=='wa');if(!q.length)return;
+$('#ovc').innerHTML='<h2 style="color:var(--wa);font-size:22px">🚨 AVISO GRAVE</h2>'+q.map(i=>'<div class="card" style="--cc:'+CREW[i].c+';margin:10px 0"><b>'+esc(CREW[i].n)+'</b> · '+CREW[i].r+'<br>'+esc(stat(i).tx)+'<div class="mu">'+stat(i).f.join('; ')+'. Salud '+T(i).score+'/100.</div><div class="row"><button class="wv" data-i="'+i+'" style="border-color:var(--wa)">Ver ficha y actuar</button></div></div>').join('')+'<button id="wc">Cerrar</button>';
+$('#ovc').style.cssText='';$('#ov').style.display='flex';$('#wc').onclick=()=>$('#ov').style.display='none';$$('.wv').forEach(b=>b.onclick=()=>{sel=+b.dataset.i;filt='wa';simFor=-2;$('#ov').style.display='none';go('t4')})}
+function render(){rMine();rCrew();rCtrl();checkWarn()}
+let ctrlOk=false;const CPIN='9999';
+function askPin(t){$('#ovc').style.cssText='border-color:var(--ac);animation:none';$('#ovc').innerHTML='<h2>🔒 Acceso exclusivo del centro de control</h2><p class="mu">La ubicación de los tripulantes y su estado de salud solo los ve el centro de control. Demo: PIN '+CPIN+'.</p><div class="row"><input id="cp" type="password" maxlength="4" placeholder="PIN"><button id="cg">Entrar</button><button id="cx">Cancelar</button></div><div id="ce" class="wa"></div>';$('#ov').style.display='flex';$('#cp').focus();
+const ok=()=>{if($('#cp').value==CPIN){ctrlOk=true;$('#ov').style.display='none';go(t)}else $('#ce').textContent='PIN incorrecto.'};$('#cg').onclick=ok;$('#cp').onkeydown=e=>{if(e.key=='Enter')ok()};$('#cx').onclick=()=>$('#ov').style.display='none'}
+function go(t){const ct=t=='t1'||t=='t4';if(ct&&!ctrlOk){askPin(t);return}if(!ct)ctrlOk=false;$$('#nav button').forEach(x=>x.classList.toggle('on',x.dataset.t==t));$$('.tab').forEach(x=>x.classList.toggle('on',x.id==t));render()}
+$$('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.t));
+$('#pp').onclick=e=>{paused=!paused;e.target.textContent=paused?'▶ Reanudar':'⏸ Pausa'};
+$$('.sp').forEach(b=>b.onclick=()=>{speed=+b.dataset.s;$$('.sp').forEach(x=>x.classList.toggle('on',x==b))});
+$('#ctrl-go').onclick=()=>{const v=$('#ctrl-in').value.trim();if(v&&sel>=0){chatCtl[sel].push(msg('c',v));$('#ctrl-in').value='';rCtrl()}};
+$('#all-go').onclick=()=>{const v=$('#all-in').value.trim();if(v){CREW.forEach((a,i)=>chatCtl[i].push(msg('c','📣 '+v)));crew.push(msg('c','📣 '+v));$('#all-in').value='';render()}};
+$('#crew-go').onclick=()=>{const v=$('#crew-in').value.trim();if(v){crew.push(msg(wc,v));$('#crew-in').value='';rCrew()}};
+function bpm(i){const r=CREW[i].room;return T(i).hr+(r=='Gimnasio'?45:r=='Dormitorio'&&(hour>=23||hour<6)?-6:8)+Math.round((Math.random()-.5)*4)}
+function live(){$('#tm').textContent='Día '+day+' · '+fmt(hour);const n=Math.abs(hour-13)/13;$('#nt').setAttribute('opacity',(hour<6||hour>=22?.35:0));
+$('#earth').setAttribute('r',Math.max(8,30-day*.5));$('#etx').textContent='Tierra · retraso '+delay()+' min';
+$('#loc').innerHTML=CREW.map((a,i)=>'<div style="display:flex;gap:8px;align-items:center;margin:6px 0"><span class="av" style="--cc:'+a.c+';width:28px;height:28px">'+esc(a.n[0])+'</span><div><b>'+esc(a.n)+'</b> '+EM[stat(i).k]+'<br><span class="mu">'+(a.room||'')+'</span></div></div>').join('')+'<h3>Ocupación</h3>'+Object.keys(ROOMS).map(r=>'<span class="chip" style="background:'+ROOMS[r][1]+';color:#06101f;margin:2px">'+r+' '+(cnt[r]||0)+'</span>').join('');
+CREW.forEach((a,i)=>{const e=$('#a'+i),s=stat(i).k;e.querySelector('.bd').setAttribute('stroke',s=='ok'?'#2ee59d':s=='su'?'#ffc94a':'#ff5470');e.querySelector('.ring').setAttribute('opacity',s=='wa'?1:0)});
+if($('#bpm'))$('#bpm').textContent=bpm(me)}
+buildShip();render();prev=CREW.map((a,i)=>stat(i).k);CREW.forEach((a,i)=>{const s=stat(i);if(s.k!='ok')chatAI[i].push(msg('ai',aiAlert(i,s)))});crew.push(msg('c','Buenos días, tripulación. Recordad el mini test diario y las actividades del día.'));render();
+let last=performance.now();setInterval(()=>{const n=performance.now(),dt=Math.min(.5,(n-last)/1000);last=n;if(paused)return;hour+=dt*speed*.25;while(hour>=24){hour-=24;day++;newDay()}},100);
+frame();setInterval(live,1000);live();
+</script></body></html>
