@@ -54,11 +54,12 @@ const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[
 const rn=(i,j,k)=>{let x=Math.sin(i*127.1+j*311.7+k*74.7)*43758.5453;return x-Math.floor(x)};
 const cl=(v,a,b)=>Math.max(a,Math.min(b,v)),avg=a=>a.reduce((x,y)=>x+y,0)/a.length;
 const CREW=[
-{n:'Elena Vega',r:'Comandante',c:'#4fd1ff',sl:7.3,hr:58,st:25,so:.8,psy:82,from:99,k:0},
-{n:'Kai Tanaka',r:'Ingeniero',c:'#ff9f43',sl:7.1,hr:60,st:30,so:.7,psy:78,from:6,k:1},
-{n:'Lena Fischer',r:'Bióloga',c:'#2ee59d',sl:7.2,hr:59,st:27,so:.22,psy:80,from:99,k:0},
-{n:'Omar Haddad',r:'Médico',c:'#c792ea',sl:7,hr:61,st:32,so:.65,psy:76,from:13,k:.5},
-{n:'Sofía Duarte',r:'Piloto',c:'#ff6bd6',sl:7.4,hr:57,st:24,so:.85,psy:84,from:99,k:0}];
+{n:'Elena Vega',r:'Comandante',c:'#4fd1ff',age:45,perfil:'Activa',ac:40,sl:7,hr:62,st:25,so:.8,psy:82,from:99,k:0},
+{n:'Kai Tanaka',r:'Ingeniero',c:'#ff9f43',age:34,perfil:'Activo',ac:45,sl:7.1,hr:58,st:30,so:.7,psy:78,from:6,k:1},
+{n:'Lena Fischer',r:'Bióloga',c:'#2ee59d',age:38,perfil:'Sedentaria e introvertida',ac:25,sl:7.2,hr:64,st:27,so:.22,psy:80,from:99,k:0},
+{n:'Omar Haddad',r:'Médico',c:'#c792ea',age:52,perfil:'Sedentario',ac:20,sl:7,hr:67,st:32,so:.65,psy:76,from:13,k:.5},
+{n:'Sofía Duarte',r:'Piloto',c:'#ff6bd6',age:31,perfil:'Atleta',ac:70,sl:7.4,hr:54,st:24,so:.85,psy:84,from:99,k:0}];
+CREW.forEach(a=>a.base={sleep:a.sl,hr:a.hr,stress:a.st,social:a.so,psy:a.psy,act:a.ac});
 CREW.forEach((a,i)=>a.pin=String(i+1).repeat(4));
 const ROOMS={Cabina:[150,'#4fd1ff'],Laboratorio:[285,'#2ee59d'],Comedor:[450,'#ffc94a'],Gimnasio:[615,'#ff6b6b'],Dormitorio:[750,'#a66bff']};
 const col={ok:'var(--ok)',su:'var(--su)',wa:'var(--wa)'},LBL={ok:'Sin alertas',su:'Sugerencia',wa:'Aviso'},EM={ok:'🟢',su:'🟡',wa:'🔴'};
@@ -68,26 +69,37 @@ const ACTS=[['🍲','Cena compartida con tema','Cada uno cocina un plato de su p
 let day=9,hour=6.9,speed=1,paused=false,sel=-1,filt='ok',me=0,simFor=-2,joined={},unl=new Set(),prev=[],cnt={};
 const chatAI=CREW.map(()=>[]),chatCtl=CREW.map(()=>[]),crew=[];
 const msg=(w,x)=>({w,x,d:day,h:Math.floor(hour)});
-function fin(o){const s=Math.min(100,o.sleep/7.5*100),h=Math.max(0,100-Math.max(0,o.hr-62)*3.5);o.score=Math.round(.3*s+.2*h+.2*(100-o.stress)+.3*o.psy);return o}
-function met(i,d){const a=CREW[i];if(a.ov)return fin({day:d,...a.ov});const ramp=cl((d-a.from)/10,0,1)*a.k,r=(k,s)=>(rn(i,d,k)-.5)*s;
-return fin({day:d,sleep:+(a.sl-ramp*2.2+r(1,.8)).toFixed(1),hr:Math.round(a.hr+ramp*22+r(2,4)),stress:Math.round(cl(a.st+ramp*42+r(3,8),5,98)),social:+cl(a.so-ramp*.5+r(4,.1),.03,.98).toFixed(2),psy:Math.round(cl(a.psy-ramp*35+r(5,6),10,98))})}
+function fin(o,i=me){const b=CREW[i].base,s=cl(100-Math.max(0,b.sleep-o.sleep)*25,0,100),h=cl(100-Math.max(0,o.hr-b.hr)*3.5,0,100),st=cl(100-Math.max(0,o.stress-b.stress)*1.3,0,100),p=cl(100-Math.max(0,b.psy-o.psy)*1.6,0,100),so=cl(o.social/b.social*100,0,100);o.score=Math.round(.25*s+.2*h+.2*st+.25*p+.1*so);return o}
+function met(i,d){const a=CREW[i];if(a.ov)return fin({day:d,...a.ov},i);const ramp=cl((d-a.from)/10,0,1)*a.k,r=(k,s)=>(rn(i,d,k)-.5)*s;
+return fin({day:d,sleep:+(a.sl-ramp*2.2+r(1,.8)).toFixed(1),hr:Math.round(a.hr+ramp*22+r(2,4)),stress:Math.round(cl(a.st+ramp*42+r(3,8),5,98)),social:+cl(a.so-ramp*.5+r(4,.1),.03,.98).toFixed(2),psy:Math.round(cl(a.psy-ramp*35+r(5,6),10,98)),act:Math.round(cl(a.ac*(1-ramp*.75)+r(6,10),0,150))},i)}
 const H=CREW.map(()=>[]);for(let d=1;d<=9;d++)CREW.forEach((a,i)=>H[i].push(met(i,d)));
 const T=i=>H[i][H[i].length-1];
-function stat(i){const t=T(i),f=[];if(t.sleep<6)f.push('sueño corto ('+t.sleep+' h)');if(t.hr>78)f.push('frecuencia alterada ('+t.hr+' lpm)');if(t.stress>65)f.push('estrés alto ('+t.stress+'/100)');if(t.psy<50)f.push('test psicológico bajo ('+t.psy+'/100)');
-const low=t.social<.3;let k='ok',tx='Todo en rango.';
-if(low&&!f.length)tx='Poca interacción social pero valores normales: perfil probablemente introvertido.';
-else if((low&&f.length>=2)||f.length>=3){k='wa';tx='Aislamiento y/o varios indicadores alterados a la vez: posible problema personal o de convivencia.'}
-else if(f.length||low){k='su';tx='Un indicador fuera de rango; conviene seguimiento.'}
-return{k,f,tx,low}}
+const TH={hr:12,sleep:1.3,stress:22,psy:18};
+function dev(i){const t=T(i),b=CREW[i].base;return{hr:t.hr-b.hr,sleep:b.sleep-t.sleep,stress:t.stress-b.stress,psy:b.psy-t.psy,soc:t.social/b.social,act:t.act/b.act}}
+function stat(i){const t=T(i),b=CREW[i].base,d=dev(i),f=[],ks=[];
+if(d.sleep>=TH.sleep||t.sleep<4){f.push('sueño '+t.sleep+' h (base '+b.sleep+' h)');ks.push('sleep')}
+if(d.hr>=TH.hr||t.hr>100){f.push('pulso en reposo '+t.hr+' lpm (base '+b.hr+')');ks.push('hr')}
+if(d.stress>=TH.stress){f.push('estrés '+t.stress+'/100 (base '+b.stress+')');ks.push('stress')}
+if(d.psy>=TH.psy){f.push('bienestar '+t.psy+'/100 (base '+b.psy+')');ks.push('psy')}
+if(d.act<.5){f.push('actividad '+t.act+' min (base '+b.act+')');ks.push('act')}
+const low=d.soc<.5;if(low)ks.push('social');let k='ok',tx='Todo dentro de sus valores habituales.';
+if(!low&&!f.length&&b.social<.3)tx='Poco contacto social, pero es su patrón habitual (base '+Math.round(b.social*100)+'%): perfil introvertido, sin alarma.';
+if((low&&f.length>=2)||f.length>=3){k='wa';tx='Aislamiento y/o varios indicadores alterados a la vez respecto a su base: posible problema personal o de convivencia.'}
+else if(f.length||low){k='su';tx=low&&!f.length?'Se aísla más de lo habitual en su caso, con el resto de valores normales: seguimiento suave.':'Algún indicador se aleja de su base; conviene seguimiento.'}
+return{k,f,tx,low,ks}}
 const delay=()=>Math.round(cl(3+day*.35,3,22)*10)/10,cohe=d=>Math.round(avg(CREW.map((a,i)=>(H[i].find(x=>x.day==d)||T(i)).social))*100);
-function aiAlert(i,s){return 'Hola '+CREW[i].n.split(' ')[0]+', he notado: '+(s.f.join(', ')||'poco contacto con el grupo')+'. ¿Quieres contarme cómo te sientes? Puedo proponerte una pausa guiada o una actividad con el equipo.'}
-function aiReply(i,t){t=t.toLowerCase();
-if(/dorm|sue[ñn]o|insomn/.test(t))return 'El sueño es clave. Hoy llevas '+T(i).sleep+' h. Baja la luz 60 min antes y evita pantallas; si sigue así aviso al médico de a bordo.';
-if(/solo|soledad|aisl/.test(t))return 'Sentirse solo en una misión larga es muy humano. ¿Te apetece compartir una comida hoy? Puedo proponer una actividad tranquila.';
-if(/estr|ansi|nerv|agobi/.test(t))return 'Respiremos: inhala 4 s, retén 4 s, exhala 6 s, cinco veces. Luego cuéntame qué lo ha causado.';
-if(/famil|tierra|casa|echo/.test(t))return 'Extrañar la Tierra es normal. Puedo pedir una videollamada o mensajes de tu familia (llegan con '+delay()+' min de retraso).';
-if(/triste|mal|cansad|harto|enfad/.test(t))return 'Gracias por contármelo. No tienes que cargar con esto solo/a: ¿aviso al psicólogo de forma confidencial?';
-return 'Te escucho. Cuéntame más: ¿es algo del trabajo, de la convivencia o personal?'}
+const GUIDE={sleep:['¿Qué te está impidiendo dormir: ruido, pensamientos o el horario?','Ajusta tus horarios, reduce estímulos una hora antes y cuida tu espacio de descanso.'],hr:['¿Has notado el corazón acelerado o has tenido un día de mucha carga?','Prueba respiración lenta (inhala 4 s, exhala 6 s) cinco minutos y evita cafeína esta tarde.'],stress:['¿Hay algo concreto que te preocupe o te sobrecargue?','Prueba respiración o mindfulness, un descanso en la cúpula y reorganizar tareas.'],social:['¿Te apetece compañía o prefieres tu espacio ahora mismo?','Hay actividades en zonas comunes, como el comedor o el módulo de ocio.'],act:['¿Qué te frena para entrenar: cansancio, tiempo o ganas?','Usa el área de entrenamiento un rato y aumenta tu actividad diaria.']};GUIDE.psy=GUIDE.stress;
+function aiAlert(i,s){const a=CREW[i],n=a.n.split(' ')[0],k=s.ks[0]||'social';return 'Hola '+n+'. Frente a tus valores habituales he notado: '+(s.f.join('; ')||'menos contacto con el grupo de lo normal')+'. '+GUIDE[k][0]+' Cuando quieras te propongo algo concreto.'}
+function aiReply(i,t){t=t.toLowerCase();const a=CREW[i],T0=T(i),b=a.base,s=stat(i),n=a.n.split(' ')[0];
+if(/pulso|coraz|latid|palpit/.test(t))return 'A tus '+a.age+' años y con tu base de '+b.hr+' lpm (perfil '+a.perfil.toLowerCase()+'), hoy estás en '+T0.hr+' lpm: '+(T0.hr-b.hr>=TH.hr?'es bastante más de lo tuyo. ':'está dentro de lo tuyo. ')+GUIDE.hr[1];
+if(/dorm|sue[ñn]o|insomn|cansad/.test(t))return 'Hoy llevas '+T0.sleep+' h y tu base son '+b.sleep+' h. '+GUIDE.sleep[1]+' '+GUIDE.sleep[0];
+if(/solo|soledad|aisl|compa[ñn]/.test(t))return (b.social<.3?'Sé que tu ritmo habitual es tranquilo y eso está bien. ':'Tú sueles estar más en contacto con el grupo, así que lo noto. ')+GUIDE.social[1]+' ¿Qué prefieres hoy?';
+if(/estr|ansi|nerv|agobi/.test(t))return 'Hoy tu estrés está en '+T0.stress+' (tu base '+b.stress+'). '+GUIDE.stress[1]+' Cuéntame qué lo ha causado.';
+if(/ejercic|entren|gimnas/.test(t))return 'Llevas '+T0.act+' min de actividad frente a tus '+b.act+' habituales. '+GUIDE.act[1]+' '+GUIDE.act[0];
+if(/famil|tierra|casa|echo/.test(t))return 'Extrañar la Tierra es normal, '+n+'. Puedo pedir una videollamada o mensajes de tu familia (llegan con '+delay()+' min de retraso).';
+if(/triste|mal|harto|enfad|deprim/.test(t))return 'Gracias por contármelo, '+n+'. No tienes que cargar con esto solo/a: ¿quieres que avise al psicólogo de forma confidencial?';
+if(/bien|content|genial|feliz/.test(t))return s.ks.length?'Me alegra, '+n+'. Aun así veo '+s.f[0]+'; ¿lo hablamos un momento?':'Me alegra, '+n+'. Todo está dentro de lo tuyo: mantén tu rutina.';
+return s.ks.length?GUIDE[s.ks[0]][0]:'Te escucho, '+n+'. ¿Es algo del trabajo, de la convivencia o personal?'}
 function newDay(){CREW.forEach((a,i)=>H[i].push(met(i,day)));CREW.forEach((a,i)=>{const s=stat(i);if(s.k!='ok')chatAI[i].push(msg('ai',aiAlert(i,s)))});render()}
 // ---- nave 2D ----
 function buildShip(){let s='<defs><linearGradient id="hg" x1="0" y1="0" y2="1"><stop offset="0" stop-color="#3a4a86"/><stop offset="1" stop-color="#1a2350"/></linearGradient><radialGradient id="ea"><stop offset="0" stop-color="#7fd0ff"/><stop offset="1" stop-color="#1b5fd0"/></radialGradient><filter id="gl"><feGaussianBlur stdDeviation="3"/></filter></defs>';
@@ -115,8 +127,10 @@ return '<svg class="ch" viewBox="0 0 300 80" preserveAspectRatio="none"><polygon
 function mtr(l,txt,pct,c){return '<div class="mt"><div class="l"><span>'+l+'</span><b>'+txt+'</b></div><div class="bar"><i style="width:'+cl(pct,2,100)+'%;background:'+c+'"></i></div></div>'}
 function ring(p,l,s){const c=p<55?col.wa:p<72?col.su:col.ok,k=238.76;return '<div class="card" style="display:flex;gap:14px;align-items:center"><svg width="92" height="92" viewBox="0 0 92 92"><circle cx="46" cy="46" r="38" fill="none" style="stroke:var(--p2)" stroke-width="9"/><circle cx="46" cy="46" r="38" fill="none" style="stroke:'+c+'" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+(k*p/100)+' '+k+'" transform="rotate(-90 46 46)"/><text x="46" y="53" text-anchor="middle" font-size="24" font-weight="700" style="fill:var(--tx)">'+p+'</text></svg><div><b>'+l+'</b><div class="mu">'+s+'</div></div></div>'}
 function sb(i){return meters(i)}
-function edHtml(i){const t=T(i);return '<div id="ed">'+[['sleep','😴 Sueño',2,10,.1],['hr','❤️ Pulso',45,110,1],['stress','⚡ Estrés',0,100,1],['psy','🧠 Test',0,100,1],['social','🤝 Social',0,1,.01]].map(d=>'<div class="sl"><span>'+d[1]+'</span><input type="range" data-k="'+d[0]+'" min="'+d[2]+'" max="'+d[3]+'" step="'+d[4]+'" value="'+t[d[0]]+'"><b id="v-'+d[0]+'">'+t[d[0]]+'</b></div>').join('')+'</div><div class="row"><button id="rst">↺ Restablecer</button></div>'}
-function meters(i){const t=T(i);return mtr('😴 Sueño',t.sleep+' h',t.sleep/9*100,t.sleep<6?col.wa:t.sleep<6.8?col.su:col.ok)+mtr('❤️ Frecuencia reposo',t.hr+' lpm',(t.hr-40)/60*100,t.hr>78?col.wa:t.hr>70?col.su:col.ok)+mtr('⚡ Estrés',t.stress+'/100',t.stress,t.stress>65?col.wa:t.stress>50?col.su:col.ok)+mtr('🧠 Bienestar (test)',t.psy+'/100',t.psy,t.psy<50?col.wa:t.psy<65?col.su:col.ok)+mtr('🤝 Tiempo social',Math.round(t.social*100)+'%',t.social*100,t.social<.3?col.su:col.ok)+mtr('💚 Salud global',t.score+'/100',t.score,t.score<55?col.wa:t.score<72?col.su:col.ok)}
+function edHtml(i){const t=T(i);return '<div id="ed">'+[['sleep','😴 Sueño',2,10,.1],['hr','❤️ Pulso',45,110,1],['stress','⚡ Estrés',0,100,1],['psy','🧠 Test',0,100,1],['social','🤝 Social',0,1,.01],['act','🏃 Actividad',0,150,1]].map(d=>'<div class="sl"><span>'+d[1]+'</span><input type="range" data-k="'+d[0]+'" min="'+d[2]+'" max="'+d[3]+'" step="'+d[4]+'" value="'+t[d[0]]+'"><b id="v-'+d[0]+'">'+t[d[0]]+'</b></div>').join('')+'</div><div class="row"><button id="rst">↺ Restablecer</button></div>'}
+function cd(d,th){return d>=th?col.wa:d>=th*.5?col.su:col.ok}
+function baseTxt(i){const a=CREW[i],b=a.base;return a.age+' años · '+a.perfil+' · Base medida en la Tierra: pulso '+b.hr+' lpm · sueño '+b.sleep+' h · actividad '+b.act+' min'}
+function meters(i){const t=T(i),b=CREW[i].base,d=dev(i);return mtr('😴 Sueño',t.sleep+' h · base '+b.sleep,t.sleep/9*100,cd(d.sleep,TH.sleep))+mtr('❤️ Pulso reposo',t.hr+' lpm · base '+b.hr,(t.hr-40)/70*100,cd(d.hr,TH.hr))+mtr('⚡ Estrés',t.stress+' · base '+b.stress,t.stress,cd(d.stress,TH.stress))+mtr('🧠 Bienestar',t.psy+' · base '+b.psy,t.psy,cd(d.psy,TH.psy))+mtr('🤝 Tiempo social',Math.round(t.social*100)+'% · base '+Math.round(b.social*100)+'%',t.social*100,d.soc<.5?col.wa:d.soc<.75?col.su:col.ok)+mtr('🏃 Actividad',t.act+' min · base '+b.act,t.act/120*100,d.act<.5?col.wa:d.act<.75?col.su:col.ok)+mtr('💚 Salud global',t.score+'/100',t.score,t.score<55?col.wa:t.score<72?col.su:col.ok)}
 const who=w=>w=='c'?'Centro de control':w=='ai'?'Asistente':w=='a'?'Astronauta':CREW[w].n;
 function bub(l,mine,nm){return l.map(m=>'<div class="m'+(m.w==mine?' me':'')+'"><small>'+esc(nm?nm(m.w):who(m.w))+' · día '+m.d+' '+String(m.h).padStart(2,'0')+':00</small>'+esc(m.x)+'</div>').join('')||'<div class="mu">Sin mensajes todavía.</div>'}
 const stick=id=>{const e=$(id);if(e)e.scrollTop=e.scrollHeight};
@@ -130,11 +144,11 @@ if(!unl.has(me)){c.innerHTML='<div class="card" style="max-width:420px"><h2>🔒
 const go=()=>{if($('#pin').value==a.pin){unl.add(me);rMine()}else $('#pe').textContent='PIN incorrecto.'};$('#pgo').onclick=go;$('#pin').onkeydown=e=>{if(e.key=='Enter')go()};return}
 const t=T(me),s=stat(me),qs=[0,1,2,3,4].map(k=>(day*3+k*2)%10);
 c.innerHTML='<div class="mu lock" style="margin-bottom:8px">🔒 Solo lo puede ver '+esc(a.n)+' · <a href="#" id="lk" style="color:var(--ac)">cerrar sesión</a></div><div class="g">'+
-'<div class="card hc" style="grid-column:1/-1"><div class="hh"><div style="display:flex;gap:12px;align-items:center"><span class="av" style="--cc:'+a.c+';width:52px;height:52px;font-size:22px">'+esc(a.n[0])+'</span><div><h2 style="margin:0">'+esc(a.n)+' · '+a.r+'</h2><div class="row" style="margin:4px 0 0"><input id="rn" placeholder="Cambiar nombre"><button id="rg">Renombrar</button></div></div></div><div style="text-align:center"><div style="font:700 40px Georgia,serif;color:var(--wa)">❤️ <span id="bpm"></span></div><div class="mu">pulso en vivo (lpm)</div></div></div><div class="hb"><div id="mm">'+sb(me)+'</div><div class="chs"><div><h3>😴 Sueño</h3>'+line(H[me].map(x=>x.sleep),3,9,'#4fd1ff')+'</div><div><h3>❤️ Pulso en reposo</h3>'+line(H[me].map(x=>x.hr),50,95,'#ff5470')+'</div><div><h3>🧠 Bienestar</h3>'+line(H[me].map(x=>x.psy),0,100,'#2ee59d')+'</div></div></div></div>'+
+'<div class="card hc" style="grid-column:1/-1"><div class="hh"><div style="display:flex;gap:12px;align-items:center"><span class="av" style="--cc:'+a.c+';width:52px;height:52px;font-size:22px">'+esc(a.n[0])+'</span><div><h2 style="margin:0">'+esc(a.n)+' · '+a.r+'</h2><div class="mu">'+baseTxt(me)+'</div><div class="row" style="margin:4px 0 0"><input id="rn" placeholder="Cambiar nombre"><button id="rg">Renombrar</button></div></div></div><div style="text-align:center"><div style="font:700 40px Georgia,serif;color:var(--wa)">❤️ <span id="bpm"></span></div><div class="mu">pulso en vivo (lpm)</div></div></div><div class="hb"><div id="mm">'+sb(me)+'</div><div class="chs"><div><h3>😴 Sueño</h3>'+line(H[me].map(x=>x.sleep),3,9,'#4fd1ff')+'</div><div><h3>❤️ Pulso en reposo</h3>'+line(H[me].map(x=>x.hr),50,95,'#ff5470')+'</div><div><h3>🧠 Bienestar</h3>'+line(H[me].map(x=>x.psy),0,100,'#2ee59d')+'</div></div></div></div>'+
 '<div class="card cb ct" style="--cc:var(--wa)"><h2>📡 Centro de control</h2><div class="chat" id="ctl"></div><div class="row"><input id="ctl-in" placeholder="Responder al centro de control"><button id="ctl-go">Enviar</button></div><div class="mu">Retraso con la Tierra: '+delay()+' min por trayecto.</div></div>'+
 '<div class="card cb" style="--cc:var(--pu)"><h2>🤖 Mi asistente personal</h2><div class="chat" id="ai"></div><div class="row"><input id="ai-in" placeholder="Cuéntame cómo te sientes…"><button id="ai-go">Enviar</button></div></div>'+
 '<div class="card" style="--cc:var(--ok)"><h2>✏️ Editar mis datos</h2><div class="mu">Simula tus sensores para ver cómo cambian tus indicadores.</div>'+edHtml(me)+'</div><div class="card" style="--cc:var(--su)"><h2>📝 Mini test del psicólogo</h2><div class="mu">1 = nada · 5 = mucho. Cambia cada día.</div>'+(t.tested?'<p style="color:var(--ok)">✅ Test de hoy enviado. ¡Gracias!</p>':qs.map(q=>'<h3>'+QS[q]+'</h3><div class="sc" data-q="'+q+'">'+[1,2,3,4,5].map(n=>'<button data-v="'+n+'">'+n+'</button>').join('')+'</div>').join('')+'<div class="row"><button id="tsend" style="background:var(--su);color:#06101f;font-weight:700">Enviar test</button></div>')+'</div></div>';
-$('#lk').onclick=e=>{e.preventDefault();unl.delete(me);rMine()};$('#rg').onclick=()=>rename(me,'#rn');$$('#ed input').forEach(r=>r.oninput=()=>{const t=T(me);t[r.dataset.k]=+r.value;$('#v-'+r.dataset.k).textContent=r.value;fin(t);CREW[me].ov={sleep:t.sleep,hr:t.hr,stress:t.stress,psy:t.psy,social:t.social};$('#mm').innerHTML=sb(me);rCrew();rCtrl();checkWarn()});$('#rst').onclick=()=>{delete CREW[me].ov;H[me][H[me].length-1]=met(me,day);render()};
+$('#lk').onclick=e=>{e.preventDefault();unl.delete(me);rMine()};$('#rg').onclick=()=>rename(me,'#rn');$$('#ed input').forEach(r=>r.oninput=()=>{const t=T(me);t[r.dataset.k]=+r.value;$('#v-'+r.dataset.k).textContent=r.value;fin(t);CREW[me].ov={sleep:t.sleep,hr:t.hr,stress:t.stress,psy:t.psy,social:t.social,act:t.act};$('#mm').innerHTML=sb(me);rCrew();rCtrl();checkWarn()});$('#rst').onclick=()=>{delete CREW[me].ov;H[me][H[me].length-1]=met(me,day);render()};
 $$('.sc button').forEach(b=>b.onclick=()=>{[...b.parentNode.children].forEach(x=>x.classList.remove('on'));b.classList.add('on')});
 if($('#tsend'))$('#tsend').onclick=()=>{const v=$$('.sc').map(e=>{const b=e.querySelector('.on');return b?(BAD.has(+e.dataset.q)?6-+b.dataset.v:+b.dataset.v):null});if(v.includes(null)){alert('Responde las 5 preguntas.');return}
 t.psy=Math.round((avg(v)-1)/4*100);t.tested=1;fin(t);const st=stat(me);if(st.k!='ok')chatAI[me].push(msg('ai',aiAlert(me,st)));render()};
@@ -162,7 +176,7 @@ $$('#names button').forEach(b=>b.onclick=()=>{sel=sel==+b.dataset.i?-1:+b.datase
 $('#c-team').innerHTML=line(H[0].map((x,d)=>avg(CREW.map((a,i)=>H[i][d].score))),0,100,'#2ee59d')+'<div class="mu" style="margin-top:6px">'+CREW.map((a,i)=>'<span style="color:'+a.c+'">● '+esc(a.n.split(' ')[0])+' '+T(i).score+'</span>').join(' · ')+'</div>';
 if(sel<0){$('#det').innerHTML='👆 Pulsa un grupo y luego un tripulante para ver su salud.';$('#det').style.setProperty('--cc','var(--ac)');$('#thread').innerHTML='';$('#cth').textContent='Comunicación (elige un tripulante)';$('#tips').innerHTML='';simFor=-2;return}
 const a=CREW[sel],t=T(sel),s=stat(sel),h=H[sel];$('#det').style.setProperty('--cc',col[s.k]);
-$('#det').innerHTML='<div style="display:flex;gap:12px;align-items:center"><span class="av" style="--cc:'+a.c+';width:52px;height:52px;font-size:22px">'+esc(a.n[0])+'</span><div><h2 style="margin:0">'+esc(a.n)+'</h2><span class="mu">'+a.r+' · '+(a.room||'')+'</span></div></div><div class="row"><input id="rn4" placeholder="Cambiar nombre"><button id="rg4">Renombrar</button></div><p><span class="chip" style="background:'+col[s.k]+';color:#06101f">'+EM[s.k]+' '+LBL[s.k]+'</span> '+esc(s.tx)+'</p>'+(s.f.length?'<p class="mu">Indicadores: '+s.f.join('; ')+'.</p>':'')+meters(sel)+
+$('#det').innerHTML='<div style="display:flex;gap:12px;align-items:center"><span class="av" style="--cc:'+a.c+';width:52px;height:52px;font-size:22px">'+esc(a.n[0])+'</span><div><h2 style="margin:0">'+esc(a.n)+'</h2><span class="mu">'+a.r+' · '+a.age+' años · '+a.perfil+' · '+(a.room||'')+'</span></div></div><div class="row"><input id="rn4" placeholder="Cambiar nombre"><button id="rg4">Renombrar</button></div><p><span class="chip" style="background:'+col[s.k]+';color:#06101f">'+EM[s.k]+' '+LBL[s.k]+'</span> '+esc(s.tx)+'</p>'+(s.f.length?'<p class="mu">Indicadores: '+s.f.join('; ')+'.</p>':'')+meters(sel)+
 '<h3>Evolución de salud</h3>'+line(h.map(x=>x.score),0,100,'#4fd1ff')+'<h3>Sueño</h3>'+line(h.map(x=>x.sleep),3,9,'#ffc94a')+'<h3>Tiempo social</h3>'+line(h.map(x=>x.social*100),0,100,'#2ee59d')+'<h3>Análisis</h3><p>'+analysis(sel)+'</p>';
 $('#rg4').onclick=()=>rename(sel,'#rn4');
 if(false){const D=[['sleep','😴 Sueño',2,10,.1],['hr','❤️ Pulso',45,110,1],['stress','⚡ Estrés',0,100,1],['psy','🧠 Test',0,100,1],['social','🤝 Social',0,1,.01]];
@@ -173,12 +187,13 @@ $('#rst').onclick=()=>{delete CREW[sel].ov;H[sel][H[sel].length-1]=met(sel,day);
 $('#thread').innerHTML=bub(chatCtl[sel],'c',w=>w=='c'?'Centro de control':a.n);stick('#thread');$('#cth').textContent='💬 Chat con '+a.n;
 const tp=['Descansa hoy: te libero 1 h de tareas.','¿Cenamos juntos esta noche? Te guardo sitio.','Hablemos por videollamada con el psicólogo.','Evita cafeína desde las 15:00 y baja la luz de tu cabina.'];
 $('#tips').innerHTML=tp.map(x=>'<button class="tp" style="font-size:12px;margin:4px 4px 0 0">'+x+'</button>').join('');$$('.tp').forEach(b=>b.onclick=()=>$('#ctrl-in').value=b.textContent)}
-function analysis(i){const h=H[i],t=T(i),f=h[Math.max(0,h.length-6)],s=stat(i),d=t.score-h[0].score,dd=t.score-f.score;
-let x='Salud '+t.score+'/100 ('+(d>=0?'+':'')+d+' desde el día 1; '+(dd>=0?'+':'')+dd+' en los últimos días). ';
-if(s.k=='wa')x+='Patrón combinado de aislamiento, peor sueño y pulso/estrés elevados: no encaja con introversión; sugiere malestar personal o fricción en el grupo. Recomendado: conversación privada hoy, revisión del psicólogo y reintegración gradual en actividades compartidas.';
-else if(s.k=='su')x+='Señales aisladas. Recomendado: mensaje de apoyo, vigilar 48 h y proponer una actividad ligera.';
-else if(s.low)x+='Su baja interacción social es estable y las constantes son buenas: respetar su espacio y ofrecer actividades de bajo contacto.';
-else x+='Evolución estable. Mantener rutina.';return x}
+function analysis(i){const h=H[i],t=T(i),f=h[Math.max(0,h.length-6)],s=stat(i),a=CREW[i],d=t.score-h[0].score,dd=t.score-f.score;
+let x='Salud '+t.score+'/100 respecto a su propia base ('+(d>=0?'+':'')+d+' desde el día 1; '+(dd>=0?'+':'')+dd+' en los últimos días). ';
+if(s.f.length||s.low){x+='Cambios frente a sus valores habituales ('+a.age+' años, perfil '+a.perfil.toLowerCase()+'): '+(s.f.join('; ')||'menos contacto social')+'. ';
+const rec={sleep:'higiene del sueño y horarios',hr:'técnicas de relajación',stress:'relajación y reorganizar tareas',psy:'seguimiento con el psicólogo',social:'actividades en zonas comunes',act:'uso del área de entrenamiento'};x+='Acciones sugeridas: '+s.ks.map(k=>rec[k]).join(', ')+'. '}
+if(s.k=='wa')x+='Varios indicadores alterados a la vez: no encaja con introversión; posible malestar personal o fricción en el grupo. Conversación privada hoy y revisión del psicólogo.';
+else if(s.k=='su')x+='Señales aisladas: vigilar 48 h y proponer una actividad ligera.';
+else x+='Todo en su rango personal. Mantener la rutina.'+(a.base.social<.3?' Su bajo contacto social es su patrón habitual: respetar su espacio.':'');return x}
 // ---- aviso grave ----
 const pend=[];function checkWarn(){CREW.forEach((a,i)=>{const s=stat(i);if(s.k=='wa'&&prev[i]!='wa'&&!pend.includes(i))pend.push(i);prev[i]=s.k});if(!$('#t4').classList.contains('on'))return;const q=pend.splice(0).filter(i=>stat(i).k=='wa');if(!q.length)return;
 $('#ovc').innerHTML='<h2 style="color:var(--wa);font-size:22px">🚨 AVISO GRAVE</h2>'+q.map(i=>'<div class="card" style="--cc:'+CREW[i].c+';margin:10px 0"><b>'+esc(CREW[i].n)+'</b> · '+CREW[i].r+'<br>'+esc(stat(i).tx)+'<div class="mu">'+stat(i).f.join('; ')+'. Salud '+T(i).score+'/100.</div><div class="row"><button class="wv" data-i="'+i+'" style="border-color:var(--wa)">Ver ficha y actuar</button></div></div>').join('')+'<button id="wc">Cerrar</button>';
